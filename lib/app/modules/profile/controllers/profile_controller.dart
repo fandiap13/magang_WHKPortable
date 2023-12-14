@@ -1,7 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:basic_utils/basic_utils.dart';
 import 'package:dio/dio.dart';
@@ -9,7 +8,6 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:wish/app/data/app_base_url.dart';
-import 'package:wish/app/models/user_model.dart';
 import 'package:wish/app/resources/colors/app_colors.dart';
 import 'package:wish/app/resources/utils/app_utils.dart';
 import 'package:wish/app/routes/app_pages.dart';

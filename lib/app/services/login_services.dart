@@ -18,7 +18,7 @@ class LoginService {
     // bool statusToken = bool.parse(token.toString());
     // ketika token kosong
     if (token == null) {
-      Get.offAndToNamed(Routes.LOGIN);
+      Get.offAllNamed(Routes.LOGIN);
     }
   }
 
@@ -27,7 +27,7 @@ class LoginService {
     String? token = await secureStorageService.getToken();
     // ketika token kosong
     if (token != null) {
-      Get.offAndToNamed(Routes.HOME);
+      Get.offAllNamed(Routes.HOME);
     }
   }
 

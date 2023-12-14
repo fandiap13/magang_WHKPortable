@@ -30,10 +30,15 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp, // Mencegah rotasi ke atas (potret)
+    ]);
+
     return GetMaterialApp(
       title: "WHK Portable",
       theme: ThemeData(
         textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
+        useMaterial3: false,
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: AppPages.INITIAL,

@@ -169,11 +169,10 @@ class _RiwayatKesehatanViewState extends State<RiwayatKesehatanView> {
                                         "satuan": "°C"
                                       },
                                       "data_riwayat":
-                                          "/sensor/oxygen/${riwayatKesehatanVM.userID.value}",
-                                      "type": ["blood_oxygen", "heart_rate"],
+                                          "/sensor/temperature/${riwayatKesehatanVM.userID.value}",
+                                      "type": ["body_temperature"],
                                       "subtitle": [
-                                        "Oksigen Darah",
-                                        "Detak Jantung"
+                                        "Suhu tubuh",
                                       ],
                                     });
                               },
@@ -239,72 +238,72 @@ class _RiwayatKesehatanViewState extends State<RiwayatKesehatanView> {
                                     });
                               },
                             ),
-                          if (riwayatKesehatanVM.bloodPressure.isNotEmpty)
-                            RiwayatKesehatanCard(
-                              durationMiliSec: 1000,
-                              id: 4,
-                              title: "Tekanan Darah",
-                              icon: Icons.bloodtype,
-                              tanggal: DateFormat('dd MMM y').format(
-                                  DateTime.parse(riwayatKesehatanVM
-                                      .bloodPressure['start_at'])),
-                              jam: DateFormat('HH:mm').format(DateTime.parse(
-                                  riwayatKesehatanVM
-                                      .bloodPressure['start_at'])),
-                              status:
-                                  riwayatKesehatanVM.bodyMassIndex['status'],
-                              value1: {
-                                "title": "Sistol",
-                                "value": riwayatKesehatanVM
-                                    .bloodPressure['value']
-                                    .split("/")[0],
-                                "satuan": "mmHg"
-                              },
-                              value2: {
-                                "title": "Diastol",
-                                "value": riwayatKesehatanVM
-                                    .bloodPressure['value']
-                                    .split("/")[1],
-                                "satuan": "mmHg"
-                              },
-                              onTap: () {
-                                Get.toNamed(Routes.DETAIL_RIWAYAT_KESEHATAN,
-                                    arguments: {
-                                      "id": 3,
-                                      "title": "Tekanan Darah",
-                                      "icon": Icons.monitor_weight,
-                                      'tanggal': DateFormat('dd MMM y').format(
-                                          DateTime.parse(riwayatKesehatanVM
-                                              .bloodPressure['start_at'])),
-                                      'jam': DateFormat('HH:mm').format(
-                                          DateTime.parse(riwayatKesehatanVM
-                                              .bloodPressure['start_at'])),
-                                      'status': riwayatKesehatanVM
-                                          .bodyMassIndex['status'],
-                                      "value1": {
-                                        "title": "Sistol",
-                                        "value": riwayatKesehatanVM
-                                            .bloodPressure['value']
-                                            .split("/")[0],
-                                        "satuan": "mmHg"
-                                      },
-                                      "value2": {
-                                        "title": "Diastol",
-                                        "value": riwayatKesehatanVM
-                                            .bloodPressure['value']
-                                            .split("/")[1],
-                                        "satuan": "mmHg"
-                                      },
-                                      "data_riwayat":
-                                          "/sensor/pressure/${riwayatKesehatanVM.userID.value}",
-                                      "type": ["blood_pressure"],
-                                      "subtitle": [
-                                        "Sistol",
-                                        "Diastol",
-                                      ],
-                                    });
-                              },
-                            ),
+                          // if (riwayatKesehatanVM.bloodPressure.isNotEmpty)
+                          //   RiwayatKesehatanCard(
+                          //     durationMiliSec: 1000,
+                          //     id: 4,
+                          //     title: "Tekanan Darah",
+                          //     icon: Icons.bloodtype,
+                          //     tanggal: DateFormat('dd MMM y').format(
+                          //         DateTime.parse(riwayatKesehatanVM
+                          //             .bloodPressure['start_at'])),
+                          //     jam: DateFormat('HH:mm').format(DateTime.parse(
+                          //         riwayatKesehatanVM
+                          //             .bloodPressure['start_at'])),
+                          //     status:
+                          //         riwayatKesehatanVM.bodyMassIndex['status'],
+                          //     value1: {
+                          //       "title": "Sistol",
+                          //       "value": riwayatKesehatanVM
+                          //           .bloodPressure['value']
+                          //           .split("/")[0],
+                          //       "satuan": "mmHg"
+                          //     },
+                          //     value2: {
+                          //       "title": "Diastol",
+                          //       "value": riwayatKesehatanVM
+                          //           .bloodPressure['value']
+                          //           .split("/")[1],
+                          //       "satuan": "mmHg"
+                          //     },
+                          //     onTap: () {
+                          //       Get.toNamed(Routes.DETAIL_RIWAYAT_KESEHATAN,
+                          //           arguments: {
+                          //             "id": 3,
+                          //             "title": "Tekanan Darah",
+                          //             "icon": Icons.monitor_weight,
+                          //             'tanggal': DateFormat('dd MMM y').format(
+                          //                 DateTime.parse(riwayatKesehatanVM
+                          //                     .bloodPressure['start_at'])),
+                          //             'jam': DateFormat('HH:mm').format(
+                          //                 DateTime.parse(riwayatKesehatanVM
+                          //                     .bloodPressure['start_at'])),
+                          //             'status': riwayatKesehatanVM
+                          //                 .bodyMassIndex['status'],
+                          //             "value1": {
+                          //               "title": "Sistol",
+                          //               "value": riwayatKesehatanVM
+                          //                   .bloodPressure['value']
+                          //                   .split("/")[0],
+                          //               "satuan": "mmHg"
+                          //             },
+                          //             "value2": {
+                          //               "title": "Diastol",
+                          //               "value": riwayatKesehatanVM
+                          //                   .bloodPressure['value']
+                          //                   .split("/")[1],
+                          //               "satuan": "mmHg"
+                          //             },
+                          //             "data_riwayat":
+                          //                 "/sensor/pressure/${riwayatKesehatanVM.userID.value}",
+                          //             "type": ["blood_pressure"],
+                          //             "subtitle": [
+                          //               "Sistol",
+                          //               "Diastol",
+                          //             ],
+                          //           });
+                          //     },
+                          //   ),
                         ],
                       );
                     }),

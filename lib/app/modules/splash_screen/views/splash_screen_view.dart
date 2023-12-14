@@ -101,7 +101,7 @@ class _SplashScreenViewState extends State<SplashScreenView> {
                   textDirection: TextDirection.rtl,
                   child: ElevatedButton.icon(
                     onPressed: () {
-                      Get.offAndToNamed(Routes.LOGIN);
+                      Get.offNamed(Routes.LOGIN);
                     },
                     style: ElevatedButton.styleFrom(
                         elevation: 2.0,

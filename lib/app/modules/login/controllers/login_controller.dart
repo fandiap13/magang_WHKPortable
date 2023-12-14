@@ -56,7 +56,7 @@ class LoginController extends GetxController {
       isLoading.value = false;
       clearField();
 
-      Get.offAndToNamed(Routes.HOME);
+      Get.offAllNamed(Routes.HOME);
     } catch (e) {
       isLoading.value = false;
       // clearField();

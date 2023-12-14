@@ -69,7 +69,7 @@ class _DetailRiwayatKesehatanViewState
                         height: 40.0,
                       ),
 
-                      // Grafik 1
+                      // Menampilkan Grafik 1
                       if (detailRiwayatVM.dataKesehatan1.isNotEmpty)
                         Column(
                           children: [
@@ -100,7 +100,7 @@ class _DetailRiwayatKesehatanViewState
                             ),
                           ],
                         ),
-                      // Grafik 2
+                      // Menampilkan Grafik 2
                       if (detailRiwayatVM.dataKesehatan2.isNotEmpty)
                         Column(
                           children: [

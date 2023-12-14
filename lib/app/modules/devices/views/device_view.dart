@@ -225,7 +225,7 @@ class _DeviceViewState extends State<DeviceView> with TickerProviderStateMixin {
                                                         filteredData
                                                             .asMap()
                                                             .forEach((i, data) {
-                                                          // jika value pengukuran sensor dalam bentuk 90/80 maka dipecah
+                                                          // jika value pengukuran sensor dalam bentuk 90/80 atau bentuk pecahan maka dipecah
                                                           if (sensorService
                                                                   .dataSensorCoba[
                                                                       data]![0]

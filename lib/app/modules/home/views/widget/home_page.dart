@@ -237,14 +237,12 @@ class _HomePageState extends State<HomePage> {
                                                       "satuan": "°C"
                                                     },
                                                     "data_riwayat":
-                                                        "/sensor/oxygen/${homeController.userID.value}",
+                                                        "/sensor/temperature/${homeController.userID.value}",
                                                     "type": [
-                                                      "blood_oxygen",
-                                                      "heart_rate"
+                                                      "body_temperature",
                                                     ],
                                                     "subtitle": [
-                                                      "Oksigen Darah",
-                                                      "Detak Jantung"
+                                                      "Suhu Tubuh",
                                                     ],
                                                   });
                                             },
@@ -353,89 +351,89 @@ class _HomePageState extends State<HomePage> {
                                         const SizedBox(
                                           width: 10.0,
                                         ),
-                                      if (homeController
-                                          .bloodPressure.isNotEmpty)
-                                        Expanded(
-                                          child: CardHome(
-                                            title: "Tekanan Darah",
-                                            icon: Icons.bloodtype,
-                                            tanggal: DateFormat('dd MMM y')
-                                                .format(DateTime.parse(
-                                                    homeController
-                                                            .bloodPressure[
-                                                        'start_at'])),
-                                            jam: DateFormat('HH:mm').format(
-                                                DateTime.parse(homeController
-                                                        .bloodPressure[
-                                                    'start_at'])),
-                                            status: homeController
-                                                .bloodPressure['status'],
-                                            hasilPengecekan: [
-                                              {
-                                                "title": "Sistol",
-                                                "value": homeController
-                                                    .bloodPressure['value']
-                                                    .split("/")[0],
-                                                "satuan": "mmHg"
-                                              },
-                                              {
-                                                "title": "Diastol",
-                                                "value": homeController
-                                                    .bloodPressure['value']
-                                                    .split("/")[1],
-                                                "satuan": "mmHg"
-                                              },
-                                            ],
-                                            onTap: () {
-                                              Get.toNamed(
-                                                  Routes
-                                                      .DETAIL_RIWAYAT_KESEHATAN,
-                                                  arguments: {
-                                                    "id": 3,
-                                                    "title": "Tekanan Darah",
-                                                    "icon":
-                                                        Icons.monitor_weight,
-                                                    'tanggal': DateFormat(
-                                                            'dd MMM y')
-                                                        .format(DateTime.parse(
-                                                            homeController
-                                                                    .bloodPressure[
-                                                                'start_at'])),
-                                                    'jam': DateFormat('HH:mm')
-                                                        .format(DateTime.parse(
-                                                            homeController
-                                                                    .bloodPressure[
-                                                                'start_at'])),
-                                                    'status': homeController
-                                                            .bodyMassIndex[
-                                                        'status'],
-                                                    "value1": {
-                                                      "title": "Sistol",
-                                                      "value": homeController
-                                                          .bloodPressure[
-                                                              'value']
-                                                          .split("/")[0],
-                                                      "satuan": "mmHg"
-                                                    },
-                                                    "value2": {
-                                                      "title": "Diastol",
-                                                      "value": homeController
-                                                          .bloodPressure[
-                                                              'value']
-                                                          .split("/")[1],
-                                                      "satuan": "mmHg"
-                                                    },
-                                                    "data_riwayat":
-                                                        "/sensor/pressure/${homeController.userID.value}",
-                                                    "type": ["blood_pressure"],
-                                                    "subtitle": [
-                                                      "Sistol",
-                                                      "Diastol",
-                                                    ],
-                                                  });
-                                            },
-                                          ),
-                                        ),
+                                      // if (homeController
+                                      //     .bloodPressure.isNotEmpty)
+                                      //   Expanded(
+                                      //     child: CardHome(
+                                      //       title: "Tekanan Darah",
+                                      //       icon: Icons.bloodtype,
+                                      //       tanggal: DateFormat('dd MMM y')
+                                      //           .format(DateTime.parse(
+                                      //               homeController
+                                      //                       .bloodPressure[
+                                      //                   'start_at'])),
+                                      //       jam: DateFormat('HH:mm').format(
+                                      //           DateTime.parse(homeController
+                                      //                   .bloodPressure[
+                                      //               'start_at'])),
+                                      //       status: homeController
+                                      //           .bloodPressure['status'],
+                                      //       hasilPengecekan: [
+                                      //         {
+                                      //           "title": "Sistol",
+                                      //           "value": homeController
+                                      //               .bloodPressure['value']
+                                      //               .split("/")[0],
+                                      //           "satuan": "mmHg"
+                                      //         },
+                                      //         {
+                                      //           "title": "Diastol",
+                                      //           "value": homeController
+                                      //               .bloodPressure['value']
+                                      //               .split("/")[1],
+                                      //           "satuan": "mmHg"
+                                      //         },
+                                      //       ],
+                                      //       onTap: () {
+                                      //         Get.toNamed(
+                                      //             Routes
+                                      //                 .DETAIL_RIWAYAT_KESEHATAN,
+                                      //             arguments: {
+                                      //               "id": 3,
+                                      //               "title": "Tekanan Darah",
+                                      //               "icon":
+                                      //                   Icons.monitor_weight,
+                                      //               'tanggal': DateFormat(
+                                      //                       'dd MMM y')
+                                      //                   .format(DateTime.parse(
+                                      //                       homeController
+                                      //                               .bloodPressure[
+                                      //                           'start_at'])),
+                                      //               'jam': DateFormat('HH:mm')
+                                      //                   .format(DateTime.parse(
+                                      //                       homeController
+                                      //                               .bloodPressure[
+                                      //                           'start_at'])),
+                                      //               'status': homeController
+                                      //                       .bodyMassIndex[
+                                      //                   'status'],
+                                      //               "value1": {
+                                      //                 "title": "Sistol",
+                                      //                 "value": homeController
+                                      //                     .bloodPressure[
+                                      //                         'value']
+                                      //                     .split("/")[0],
+                                      //                 "satuan": "mmHg"
+                                      //               },
+                                      //               "value2": {
+                                      //                 "title": "Diastol",
+                                      //                 "value": homeController
+                                      //                     .bloodPressure[
+                                      //                         'value']
+                                      //                     .split("/")[1],
+                                      //                 "satuan": "mmHg"
+                                      //               },
+                                      //               "data_riwayat":
+                                      //                   "/sensor/pressure/${homeController.userID.value}",
+                                      //               "type": ["blood_pressure"],
+                                      //               "subtitle": [
+                                      //                 "Sistol",
+                                      //                 "Diastol",
+                                      //               ],
+                                      //             });
+                                      //       },
+                                      //     ),
+                                      //   ),
                                     ],
                                   ),
                                 ],

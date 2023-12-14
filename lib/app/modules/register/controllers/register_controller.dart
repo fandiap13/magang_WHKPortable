@@ -77,7 +77,6 @@ class RegisterController extends GetxController {
       AppUtils.toast("Register berhasil !", AppColors.primaryColor);
 
       isLoading.value = false;
-
       clearField();
       Get.toNamed(Routes.LOGIN);
     } catch (e) {

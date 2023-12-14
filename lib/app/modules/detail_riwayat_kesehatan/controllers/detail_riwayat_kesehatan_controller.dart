@@ -85,8 +85,13 @@ class DetailRiwayatKesehatanController extends GetxController {
       // PENGELOLAAN DATA =================================================================
       // jika data berisi kombinasi
       if (response.data['combined_data'] != null) {
-        dataRiwayatKesehatan1.value = response.data['combined_data'][type[0]];
-        dataRiwayatKesehatan2.value = response.data['combined_data'][type[1]];
+        if (response.data['combined_data'].length == 1) {
+          dataRiwayatKesehatan1.value = response.data['combined_data'][type[0]];
+        } else {
+          dataRiwayatKesehatan1.value = response.data['combined_data'][type[0]];
+          dataRiwayatKesehatan2.value = response.data['combined_data'][type[1]];
+        }
+        // jika data tidak berisi kombinasi
       } else {
         dataRiwayatKesehatan1.value = response.data[type[0]];
       }
@@ -140,7 +145,7 @@ class DetailRiwayatKesehatanController extends GetxController {
               e.response!.statusMessage.toString(), AppColors.dangerColor);
           // hapus token lalu logout
           await secureStorageService.deleteToken();
-          Get.offAndToNamed(Routes.LOGIN);
+          Get.offAllNamed(Routes.LOGIN);
         } else if (e.type == DioExceptionType.connectionError) {
           AppUtils.toast("Tidak ada koneksi internet !", AppColors.dangerColor);
         } else if (e.type == DioExceptionType.badCertificate) {
