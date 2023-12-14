@@ -42,12 +42,16 @@ class _GrafikDetailKesehatanState extends State<GrafikDetailKesehatan> {
             const SizedBox(
               width: 5.0,
             ),
-            Text(
-              widget.title,
-              style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 18.0,
-                  color: AppColors.secondaryColor),
+            Expanded(
+              child: Text(
+                widget.title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18.0,
+                    color: AppColors.secondaryColor),
+              ),
             ),
           ],
         ),

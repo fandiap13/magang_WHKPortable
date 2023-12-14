@@ -48,235 +48,243 @@ class _ProfileViewState extends State<ProfileView> {
         body: Obx(
           () => profileVM.isLoading.value == true
               ? const MyLoaderScreen()
-              : SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: Form(
-                          key: _formKeyProfile,
-                          child: Column(
-                            children: [
-                              InputFieldWithIconComponent(
-                                readOnlyStatus: true,
-                                errorText: profileVM.errors.isEmpty
-                                    ? null
-                                    : profileVM.errors['email'],
-                                width: double.infinity,
-                                controller: profileVM.emailController.value,
-                                focusNode: profileVM.emailFocusedNode.value,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "Email tidak boleh kosong!";
-                                  }
-                                  if (!isEmail(value)) {
-                                    return "Email tidak valid!";
-                                  }
-                                  return null;
-                                },
-                                onFiledSubmitted: (value) {
-                                  AppUtils.fieldFocusChange(
-                                      context,
-                                      profileVM.emailFocusedNode.value,
-                                      profileVM.passwordFocusedNode.value);
-                                },
-                                hintText: "Email",
-                                icon: Icons.email,
-                                inputType: TextInputType.emailAddress,
-                                isPasswordField: false,
-                              ),
-                              InputFieldWithIconComponent(
-                                width: double.infinity,
-                                controller: profileVM.nameController.value,
-                                focusNode: profileVM.nameFocusedNode.value,
-                                errorText: profileVM.errors.isEmpty
-                                    ? null
-                                    : profileVM.errors['name'],
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "Nama tidak boleh kosong!";
-                                  }
-                                  return null;
-                                },
-                                onFiledSubmitted: (value) {
-                                  AppUtils.fieldFocusChange(
-                                      context,
-                                      profileVM.nameFocusedNode.value,
-                                      profileVM.emailFocusedNode.value);
-                                },
-                                hintText: "Nama",
-                                icon: Icons.person,
-                                inputType: TextInputType.text,
-                                isPasswordField: false,
-                              ),
-                              InputFieldWithIconComponent(
-                                width: double.infinity,
-                                controller: profileVM.passwordController.value,
-                                focusNode: profileVM.passwordFocusedNode.value,
-                                errorText: profileVM.errors.isEmpty
-                                    ? null
-                                    : profileVM.errors['password'],
-                                validator: (value) {
-                                  return null;
-                                },
-                                onFiledSubmitted: (value) {
-                                  AppUtils.fieldFocusChange(
-                                      context,
-                                      profileVM.passwordFocusedNode.value,
-                                      profileVM.telpFocusedNode.value);
-                                },
-                                hintText: "Password",
-                                icon: Icons.security,
-                                inputType: TextInputType.emailAddress,
-                                isPasswordField: true,
-                              ),
-                              InputFieldWithIconComponent(
-                                width: double.infinity,
-                                controller: profileVM.telpController.value,
-                                focusNode: profileVM.telpFocusedNode.value,
-                                errorText: profileVM.errors.isEmpty
-                                    ? null
-                                    : profileVM.errors['phone'],
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "No.telp tidak boleh kosong!";
-                                  }
-                                  if (!isLength(value, 11)) {
-                                    return "No.Telp minimal 11 Karakter!";
-                                  }
-                                  return null;
-                                },
-                                onFiledSubmitted: (value) {
-                                  AppUtils.fieldFocusChange(
-                                      context,
-                                      profileVM.telpFocusedNode.value,
-                                      profileVM.genderFocusedNode.value);
-                                },
-                                hintText: "No.telp",
-                                icon: Icons.person,
-                                inputType: TextInputType.phone,
-                                isPasswordField: false,
-                              ),
-                              DropdownInputWithIcon(
-                                listValue: const ['Laki-laki', 'Perempuan'],
-                                controller: profileVM.genderController.value,
-                                focusNode: profileVM.genderFocusedNode.value,
-                                errorText: profileVM.errors.isEmpty
-                                    ? null
-                                    : profileVM.errors['gender'],
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "Gender tidak boleh kosong!";
-                                  }
-                                  return null;
-                                },
-                                hintText: "Gender",
-                                icon: Icons.person,
-                                changeValue: (newValue) {
-                                  profileVM.genderController.value =
-                                      newValue.toString();
-                                },
-                              ),
-                              InputFieldWithIconComponent(
-                                width: double.infinity,
-                                controller:
-                                    profileVM.tanggalLahirController.value,
-                                focusNode:
-                                    profileVM.tanggalLahirFocusedNode.value,
-                                errorText: profileVM.errors.isEmpty
-                                    ? null
-                                    : profileVM.errors['birthday'],
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "Tanggal lahir tidak boleh kosong!";
-                                  }
-                                  return null;
-                                },
-                                onFiledSubmitted: (value) {
-                                  AppUtils.fieldFocusChange(
-                                      context,
-                                      profileVM.tanggalLahirFocusedNode.value,
-                                      profileVM.tinggiFocusedNode.value);
-                                },
-                                onTap: () async {
-                                  DateTime? pickedDate = await showDatePicker(
-                                      builder: (context, child) {
-                                        return Theme(
-                                          data: Theme.of(context),
-                                          child: Container(child: child),
-                                        );
-                                      },
-                                      initialEntryMode:
-                                          DatePickerEntryMode.calendarOnly,
-                                      locale: const Locale('id'),
-                                      context: context,
-                                      initialDate:
-                                          DateTime.now(), //get today's date
-                                      firstDate: DateTime(1900),
-                                      lastDate: DateTime(2100));
-
-                                  if (pickedDate != null) {
-                                    String formattedDate =
-                                        DateFormat('yyyy-MM-dd')
-                                            .format(pickedDate);
-                                    profileVM.tanggalLahirController.value
-                                        .text = formattedDate;
-                                  }
-                                },
-                                hintText: "Tanggal Lahir",
-                                icon: Icons.date_range,
-                                isPasswordField: false,
-                                readOnlyStatus: true,
-                              ),
-                              Obx(
-                                () => InputFieldWithIconComponent(
+              : RefreshIndicator(
+                  onRefresh: () async => await loadData(),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Form(
+                            key: _formKeyProfile,
+                            child: Column(
+                              children: [
+                                InputFieldWithIconComponent(
+                                  readOnlyStatus: true,
+                                  errorText: profileVM.errors.isEmpty
+                                      ? null
+                                      : profileVM.errors['email'],
                                   width: double.infinity,
-                                  controller: profileVM.tinggiController.value,
-                                  focusNode: profileVM.tinggiFocusedNode.value,
+                                  controller: profileVM.emailController.value,
+                                  focusNode: profileVM.emailFocusedNode.value,
                                   validator: (value) {
                                     if (value!.isEmpty) {
-                                      return "Tinggi tidak boleh kosong!";
+                                      return "Email tidak boleh kosong!";
+                                    }
+                                    if (!isEmail(value)) {
+                                      return "Email tidak valid!";
                                     }
                                     return null;
                                   },
-                                  onFiledSubmitted: (value) {},
-                                  hintText: "Tinggi (cm)",
-                                  icon: Icons.person,
-                                  inputType: TextInputType.number,
+                                  onFiledSubmitted: (value) {
+                                    AppUtils.fieldFocusChange(
+                                        context,
+                                        profileVM.emailFocusedNode.value,
+                                        profileVM.passwordFocusedNode.value);
+                                  },
+                                  hintText: "Email",
+                                  icon: Icons.email,
+                                  inputType: TextInputType.emailAddress,
                                   isPasswordField: false,
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 40,
-                              ),
-                              ButtonComponent(
-                                  isLoading: profileVM.isLoading.value,
-                                  icon: Icons.save,
-                                  text: "Simpan Perubahan",
-                                  onPress: () async {
-                                    if (profileVM.isLoading.value == false) {
-                                      // mengecek apakah input data sudah divalidasi lewat front end
-                                      // mengecek apakah ada error dari api backend
-                                      // jika salah satu terpenuhi maka dapat lanjut
-                                      if (_formKeyProfile.currentState!
-                                              .validate() ||
-                                          profileVM.errors.isNotEmpty) {
-                                        await profileVM.updateProfile(context);
-                                      }
+                                InputFieldWithIconComponent(
+                                  width: double.infinity,
+                                  controller: profileVM.nameController.value,
+                                  focusNode: profileVM.nameFocusedNode.value,
+                                  errorText: profileVM.errors.isEmpty
+                                      ? null
+                                      : profileVM.errors['name'],
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Nama tidak boleh kosong!";
                                     }
-                                    return;
-                                  }),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                            ],
+                                    return null;
+                                  },
+                                  onFiledSubmitted: (value) {
+                                    AppUtils.fieldFocusChange(
+                                        context,
+                                        profileVM.nameFocusedNode.value,
+                                        profileVM.emailFocusedNode.value);
+                                  },
+                                  hintText: "Nama",
+                                  icon: Icons.person,
+                                  inputType: TextInputType.text,
+                                  isPasswordField: false,
+                                ),
+                                InputFieldWithIconComponent(
+                                  width: double.infinity,
+                                  controller:
+                                      profileVM.passwordController.value,
+                                  focusNode:
+                                      profileVM.passwordFocusedNode.value,
+                                  errorText: profileVM.errors.isEmpty
+                                      ? null
+                                      : profileVM.errors['password'],
+                                  validator: (value) {
+                                    return null;
+                                  },
+                                  onFiledSubmitted: (value) {
+                                    AppUtils.fieldFocusChange(
+                                        context,
+                                        profileVM.passwordFocusedNode.value,
+                                        profileVM.telpFocusedNode.value);
+                                  },
+                                  hintText: "Password",
+                                  icon: Icons.security,
+                                  inputType: TextInputType.emailAddress,
+                                  isPasswordField: true,
+                                ),
+                                InputFieldWithIconComponent(
+                                  width: double.infinity,
+                                  controller: profileVM.telpController.value,
+                                  focusNode: profileVM.telpFocusedNode.value,
+                                  errorText: profileVM.errors.isEmpty
+                                      ? null
+                                      : profileVM.errors['phone'],
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "No.telp tidak boleh kosong!";
+                                    }
+                                    if (!isLength(value, 11)) {
+                                      return "No.Telp minimal 11 Karakter!";
+                                    }
+                                    return null;
+                                  },
+                                  onFiledSubmitted: (value) {
+                                    AppUtils.fieldFocusChange(
+                                        context,
+                                        profileVM.telpFocusedNode.value,
+                                        profileVM.genderFocusedNode.value);
+                                  },
+                                  hintText: "No.telp",
+                                  icon: Icons.person,
+                                  inputType: TextInputType.phone,
+                                  isPasswordField: false,
+                                ),
+                                DropdownInputWithIcon(
+                                  listValue: const ['Laki-laki', 'Perempuan'],
+                                  controller: profileVM.genderController.value,
+                                  focusNode: profileVM.genderFocusedNode.value,
+                                  errorText: profileVM.errors.isEmpty
+                                      ? null
+                                      : profileVM.errors['gender'],
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Gender tidak boleh kosong!";
+                                    }
+                                    return null;
+                                  },
+                                  hintText: "Gender",
+                                  icon: Icons.person,
+                                  changeValue: (newValue) {
+                                    profileVM.genderController.value =
+                                        newValue.toString();
+                                  },
+                                ),
+                                InputFieldWithIconComponent(
+                                  width: double.infinity,
+                                  controller:
+                                      profileVM.tanggalLahirController.value,
+                                  focusNode:
+                                      profileVM.tanggalLahirFocusedNode.value,
+                                  errorText: profileVM.errors.isEmpty
+                                      ? null
+                                      : profileVM.errors['birthday'],
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Tanggal lahir tidak boleh kosong!";
+                                    }
+                                    return null;
+                                  },
+                                  onFiledSubmitted: (value) {
+                                    AppUtils.fieldFocusChange(
+                                        context,
+                                        profileVM.tanggalLahirFocusedNode.value,
+                                        profileVM.tinggiFocusedNode.value);
+                                  },
+                                  onTap: () async {
+                                    DateTime? pickedDate = await showDatePicker(
+                                        builder: (context, child) {
+                                          return Theme(
+                                            data: Theme.of(context),
+                                            child: Container(child: child),
+                                          );
+                                        },
+                                        initialEntryMode:
+                                            DatePickerEntryMode.calendarOnly,
+                                        locale: const Locale('id'),
+                                        context: context,
+                                        initialDate:
+                                            DateTime.now(), //get today's date
+                                        firstDate: DateTime(1900),
+                                        lastDate: DateTime(2100));
+
+                                    if (pickedDate != null) {
+                                      String formattedDate =
+                                          DateFormat('yyyy-MM-dd')
+                                              .format(pickedDate);
+                                      profileVM.tanggalLahirController.value
+                                          .text = formattedDate;
+                                    }
+                                  },
+                                  hintText: "Tanggal Lahir",
+                                  icon: Icons.date_range,
+                                  isPasswordField: false,
+                                  readOnlyStatus: true,
+                                ),
+                                Obx(
+                                  () => InputFieldWithIconComponent(
+                                    width: double.infinity,
+                                    controller:
+                                        profileVM.tinggiController.value,
+                                    focusNode:
+                                        profileVM.tinggiFocusedNode.value,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return "Tinggi tidak boleh kosong!";
+                                      }
+                                      return null;
+                                    },
+                                    onFiledSubmitted: (value) {},
+                                    hintText: "Tinggi (cm)",
+                                    icon: Icons.person,
+                                    inputType: TextInputType.number,
+                                    isPasswordField: false,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 40,
+                                ),
+                                ButtonComponent(
+                                    isLoading: profileVM.isLoading.value,
+                                    icon: Icons.save,
+                                    text: "Simpan Perubahan",
+                                    onPress: () async {
+                                      if (profileVM.isLoading.value == false) {
+                                        // mengecek apakah input data sudah divalidasi lewat front end
+                                        // mengecek apakah ada error dari api backend
+                                        // jika salah satu terpenuhi maka dapat lanjut
+                                        if (_formKeyProfile.currentState!
+                                                .validate() ||
+                                            profileVM.errors.isNotEmpty) {
+                                          await profileVM
+                                              .updateProfile(context);
+                                        }
+                                      }
+                                      return;
+                                    }),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
         ));

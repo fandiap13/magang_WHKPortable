@@ -47,249 +47,254 @@ class _DetailRiwayatKesehatanViewState
         ),
         body: Obx(() => detailRiwayatVM.isLoading.value == true
             ? const MyLoaderScreen()
-            : SingleChildScrollView(
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      DetailRiwayatKesehatanCard(
-                        id: data['id'],
-                        title: data['title'],
-                        icon: data['icon'],
-                        tanggal: data['tanggal'],
-                        status: data['status'],
-                        jam: data['jam'],
-                        value1: data['value1'],
-                        value2: data['value2'],
-                      ),
-
-                      const SizedBox(
-                        height: 40.0,
-                      ),
-
-                      // Menampilkan Grafik 1
-                      if (detailRiwayatVM.dataKesehatan1.isNotEmpty)
-                        Column(
-                          children: [
-                            GrafikDetailKesehatan(
-                                title:
-                                    "Grafik ${data['title']} (${data['subtitle'][0]})",
-                                value: detailRiwayatVM.dataKesehatan1),
-                            const SizedBox(
-                              height: 20.0,
-                            ),
-                            PaginationWidget(
-                              currentPage: detailRiwayatVM.currentPage.value,
-                              pageCount: detailRiwayatVM.totalPage.value,
-                              limit: detailRiwayatVM.limit.value,
-                              totalItem: detailRiwayatVM.totalItems.value,
-                              next: () async {
-                                await detailRiwayatVM.nextPage(
-                                    data['data_riwayat'], data['type']);
-                              },
-                              previous: () async {
-                                await detailRiwayatVM.previousPage(
-                                    data['data_riwayat'], data['type']);
-                              },
-                            ),
-                            // End grafik
-                            const SizedBox(
-                              height: 40.0,
-                            ),
-                          ],
-                        ),
-                      // Menampilkan Grafik 2
-                      if (detailRiwayatVM.dataKesehatan2.isNotEmpty)
-                        Column(
-                          children: [
-                            GrafikDetailKesehatan(
-                                title:
-                                    "Grafik ${data['title']} (${data['subtitle'][1]})",
-                                value: detailRiwayatVM.dataKesehatan2),
-                            const SizedBox(
-                              height: 20.0,
-                            ),
-                            PaginationWidget(
-                              currentPage: detailRiwayatVM.currentPage.value,
-                              pageCount: detailRiwayatVM.totalPage.value,
-                              limit: detailRiwayatVM.limit.value,
-                              totalItem: detailRiwayatVM.totalItems.value,
-                              next: () async {
-                                await detailRiwayatVM.nextPage(
-                                    data['data_riwayat'], data['type']);
-                              },
-                              previous: () async {
-                                await detailRiwayatVM.previousPage(
-                                    data['data_riwayat'], data['type']);
-                              },
-                            ), // End grafik
-
-                            const SizedBox(
-                              height: 40.0,
-                            ),
-                          ],
+            : RefreshIndicator(
+                onRefresh: () async => await loadingData(),
+                child: SingleChildScrollView(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        DetailRiwayatKesehatanCard(
+                          id: data['id'],
+                          title: data['title'],
+                          icon: data['icon'],
+                          tanggal: data['tanggal'],
+                          status: data['status'],
+                          jam: data['jam'],
+                          value1: data['value1'],
+                          value2: data['value2'],
                         ),
 
-                      Row(
-                        children: [
-                          Expanded(
-                            child: ListView(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              children: [
-                                // title 1
-                                if (detailRiwayatVM
-                                    .dataRiwayatKesehatan1.isNotEmpty)
-                                  Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Container(
-                                            padding: const EdgeInsets.all(5.0),
-                                            decoration: const BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: AppColors.lightGrey3,
-                                            ),
-                                            child: const Icon(
-                                              Icons.table_chart,
-                                              color: AppColors.grey,
-                                              size: 20.0,
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 5.0,
-                                          ),
-                                          Text(
-                                            "Tabel ${data['title']} (${data['subtitle'][0]})",
-                                            style: GoogleFonts.poppins(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 18.0,
-                                                color:
-                                                    AppColors.secondaryColor),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 20.0,
-                                      ),
-                                      TabelDetailKesehatan(
-                                        currentPage:
-                                            detailRiwayatVM.currentPage.value,
-                                        limit: detailRiwayatVM.limit.value,
-                                        totalItem:
-                                            detailRiwayatVM.totalItems.value,
-                                        data: detailRiwayatVM
-                                            .dataRiwayatKesehatan1,
-                                      ),
-                                      const SizedBox(
-                                        height: 20.0,
-                                      ),
-                                      PaginationWidget(
-                                        currentPage:
-                                            detailRiwayatVM.currentPage.value,
-                                        pageCount:
-                                            detailRiwayatVM.totalPage.value,
-                                        limit: detailRiwayatVM.limit.value,
-                                        totalItem:
-                                            detailRiwayatVM.totalItems.value,
-                                        next: () async {
-                                          await detailRiwayatVM.nextPage(
-                                              data['data_riwayat'],
-                                              data['type']);
-                                        },
-                                        previous: () async {
-                                          await detailRiwayatVM.previousPage(
-                                              data['data_riwayat'],
-                                              data['type']);
-                                        },
-                                      ),
-                                      const SizedBox(
-                                        height: 30.0,
-                                      ),
-                                    ],
-                                  ),
+                        const SizedBox(
+                          height: 40.0,
+                        ),
 
-                                /// table 2
-                                if (detailRiwayatVM
-                                    .dataRiwayatKesehatan2.isNotEmpty)
-                                  Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Container(
-                                            padding: const EdgeInsets.all(5.0),
-                                            decoration: const BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: AppColors.lightGrey3,
-                                            ),
-                                            child: const Icon(
-                                              Icons.table_chart,
-                                              color: AppColors.grey,
-                                              size: 20.0,
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 5.0,
-                                          ),
-                                          Text(
-                                            "Tabel ${data['title']} (${data['subtitle'][1]})",
-                                            style: GoogleFonts.poppins(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 18.0,
-                                                color:
-                                                    AppColors.secondaryColor),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 20.0,
-                                      ),
-                                      TabelDetailKesehatan(
-                                        currentPage:
-                                            detailRiwayatVM.currentPage.value,
-                                        limit: detailRiwayatVM.limit.value,
-                                        totalItem:
-                                            detailRiwayatVM.totalItems.value,
-                                        data: detailRiwayatVM
-                                            .dataRiwayatKesehatan2,
-                                      ),
-                                      const SizedBox(
-                                        height: 20.0,
-                                      ),
-                                      PaginationWidget(
-                                        currentPage:
-                                            detailRiwayatVM.currentPage.value,
-                                        pageCount:
-                                            detailRiwayatVM.totalPage.value,
-                                        limit: detailRiwayatVM.limit.value,
-                                        totalItem:
-                                            detailRiwayatVM.totalItems.value,
-                                        next: () async {
-                                          await detailRiwayatVM.nextPage(
-                                              data['data_riwayat'],
-                                              data['type']);
-                                        },
-                                        previous: () async {
-                                          await detailRiwayatVM.previousPage(
-                                              data['data_riwayat'],
-                                              data['type']);
-                                        },
-                                      ),
-                                      const SizedBox(
-                                        height: 20.0,
-                                      ),
-                                    ],
-                                  ),
-                              ],
-                            ),
+                        // Menampilkan Grafik 1
+                        if (detailRiwayatVM.dataKesehatan1.isNotEmpty)
+                          Column(
+                            children: [
+                              GrafikDetailKesehatan(
+                                  title:
+                                      "Grafik ${data['title']} (${data['subtitle'][0]})",
+                                  value: detailRiwayatVM.dataKesehatan1),
+                              const SizedBox(
+                                height: 20.0,
+                              ),
+                              PaginationWidget(
+                                currentPage: detailRiwayatVM.currentPage.value,
+                                pageCount: detailRiwayatVM.totalPage.value,
+                                limit: detailRiwayatVM.limit.value,
+                                totalItem: detailRiwayatVM.totalItems.value,
+                                next: () async {
+                                  await detailRiwayatVM.nextPage(
+                                      data['data_riwayat'], data['type']);
+                                },
+                                previous: () async {
+                                  await detailRiwayatVM.previousPage(
+                                      data['data_riwayat'], data['type']);
+                                },
+                              ),
+                              // End grafik
+                              const SizedBox(
+                                height: 40.0,
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        // Menampilkan Grafik 2
+                        if (detailRiwayatVM.dataKesehatan2.isNotEmpty)
+                          Column(
+                            children: [
+                              GrafikDetailKesehatan(
+                                  title:
+                                      "Grafik ${data['title']} (${data['subtitle'][1]})",
+                                  value: detailRiwayatVM.dataKesehatan2),
+                              const SizedBox(
+                                height: 20.0,
+                              ),
+                              PaginationWidget(
+                                currentPage: detailRiwayatVM.currentPage.value,
+                                pageCount: detailRiwayatVM.totalPage.value,
+                                limit: detailRiwayatVM.limit.value,
+                                totalItem: detailRiwayatVM.totalItems.value,
+                                next: () async {
+                                  await detailRiwayatVM.nextPage(
+                                      data['data_riwayat'], data['type']);
+                                },
+                                previous: () async {
+                                  await detailRiwayatVM.previousPage(
+                                      data['data_riwayat'], data['type']);
+                                },
+                              ), // End grafik
 
-                      // Table
-                    ],
+                              const SizedBox(
+                                height: 40.0,
+                              ),
+                            ],
+                          ),
+
+                        Row(
+                          children: [
+                            Expanded(
+                              child: ListView(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                children: [
+                                  // title 1
+                                  if (detailRiwayatVM
+                                      .dataRiwayatKesehatan1.isNotEmpty)
+                                    Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Container(
+                                              padding:
+                                                  const EdgeInsets.all(5.0),
+                                              decoration: const BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: AppColors.lightGrey3,
+                                              ),
+                                              child: const Icon(
+                                                Icons.table_chart,
+                                                color: AppColors.grey,
+                                                size: 20.0,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 5.0,
+                                            ),
+                                            Text(
+                                              "Tabel ${data['title']} (${data['subtitle'][0]})",
+                                              style: GoogleFonts.poppins(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 18.0,
+                                                  color:
+                                                      AppColors.secondaryColor),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 20.0,
+                                        ),
+                                        TabelDetailKesehatan(
+                                          currentPage:
+                                              detailRiwayatVM.currentPage.value,
+                                          limit: detailRiwayatVM.limit.value,
+                                          totalItem:
+                                              detailRiwayatVM.totalItems.value,
+                                          data: detailRiwayatVM
+                                              .dataRiwayatKesehatan1,
+                                        ),
+                                        const SizedBox(
+                                          height: 20.0,
+                                        ),
+                                        PaginationWidget(
+                                          currentPage:
+                                              detailRiwayatVM.currentPage.value,
+                                          pageCount:
+                                              detailRiwayatVM.totalPage.value,
+                                          limit: detailRiwayatVM.limit.value,
+                                          totalItem:
+                                              detailRiwayatVM.totalItems.value,
+                                          next: () async {
+                                            await detailRiwayatVM.nextPage(
+                                                data['data_riwayat'],
+                                                data['type']);
+                                          },
+                                          previous: () async {
+                                            await detailRiwayatVM.previousPage(
+                                                data['data_riwayat'],
+                                                data['type']);
+                                          },
+                                        ),
+                                        const SizedBox(
+                                          height: 30.0,
+                                        ),
+                                      ],
+                                    ),
+
+                                  /// table 2
+                                  if (detailRiwayatVM
+                                      .dataRiwayatKesehatan2.isNotEmpty)
+                                    Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Container(
+                                              padding:
+                                                  const EdgeInsets.all(5.0),
+                                              decoration: const BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: AppColors.lightGrey3,
+                                              ),
+                                              child: const Icon(
+                                                Icons.table_chart,
+                                                color: AppColors.grey,
+                                                size: 20.0,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 5.0,
+                                            ),
+                                            Text(
+                                              "Tabel ${data['title']} (${data['subtitle'][1]})",
+                                              style: GoogleFonts.poppins(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 18.0,
+                                                  color:
+                                                      AppColors.secondaryColor),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 20.0,
+                                        ),
+                                        TabelDetailKesehatan(
+                                          currentPage:
+                                              detailRiwayatVM.currentPage.value,
+                                          limit: detailRiwayatVM.limit.value,
+                                          totalItem:
+                                              detailRiwayatVM.totalItems.value,
+                                          data: detailRiwayatVM
+                                              .dataRiwayatKesehatan2,
+                                        ),
+                                        const SizedBox(
+                                          height: 20.0,
+                                        ),
+                                        PaginationWidget(
+                                          currentPage:
+                                              detailRiwayatVM.currentPage.value,
+                                          pageCount:
+                                              detailRiwayatVM.totalPage.value,
+                                          limit: detailRiwayatVM.limit.value,
+                                          totalItem:
+                                              detailRiwayatVM.totalItems.value,
+                                          next: () async {
+                                            await detailRiwayatVM.nextPage(
+                                                data['data_riwayat'],
+                                                data['type']);
+                                          },
+                                          previous: () async {
+                                            await detailRiwayatVM.previousPage(
+                                                data['data_riwayat'],
+                                                data['type']);
+                                          },
+                                        ),
+                                        const SizedBox(
+                                          height: 20.0,
+                                        ),
+                                      ],
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        // Table
+                      ],
+                    ),
                   ),
                 ),
               )));
